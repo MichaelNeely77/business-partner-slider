@@ -1,10 +1,15 @@
 import { useBlockProps, MediaUpload, URLInputButton, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, Button } from '@wordpress/components';
-import { Fragment, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
 	const { cards } = attributes;
+
+	const addCard = () => {
+		const newCards = [...cards, { imageUrl: '', linkUrl: '' }];
+		setAttributes({ cards: newCards });
+	};
 
 	const updateCard = (index, key, value) => {
 		const newCards = cards.slice();
@@ -12,64 +17,28 @@ const Edit = ({ attributes, setAttributes }) => {
 		setAttributes({ cards: newCards });
 	};
 
-	const handleAddCard = (media) => {
-		const newCards = [...cards, { imageUrl: media.url, linkUrl: '' }];
+	const removeCard = (index) => {
+		const newCards = cards.slice();
+		newCards.splice(index, 1);
 		setAttributes({ cards: newCards });
 	};
-
-	useEffect(() => {
-		const addCardButton = document.querySelector('.add-card-button');
-		if (addCardButton) {
-			addCardButton.addEventListener('click', function() {
-				const event = new Event('bcs:addCard');
-				document.dispatchEvent(event);
-			});
-		}
-
-		const handleRemoveCard = (event) => {
-			const newCards = cards.slice();
-			newCards.splice(event.detail.index, 1);
-			setAttributes({ cards: newCards });
-		};
-
-		document.addEventListener('bcs:removeCard', handleRemoveCard);
-
-		return () => {
-			if (addCardButton) {
-				addCardButton.removeEventListener('click', function() {
-					const event = new Event('bcs:addCard');
-					document.dispatchEvent(event);
-				});
-			}
-
-			document.removeEventListener('bcs:removeCard', handleRemoveCard);
-		};
-	}, [cards]);
 
 	return (
 		<Fragment>
 			<InspectorControls>
 				<PanelBody title="Cards">
-					<MediaUpload
-						onSelect={handleAddCard}
-						allowedTypes={['image']}
-						render={({ open }) => (
-							<Button className="add-card-button" onClick={open}>
-								Add Card
-							</Button>
-						)}
-					/>
+					<Button isPrimary onClick={addCard}>Add Card</Button>
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()} className="bcs-slider">
 				{cards.map((card, index) => (
-					<div className="bcs-card" key={index} data-index={index}>
+					<div className="bcs-card" key={index}>
 						<MediaUpload
 							onSelect={(media) => updateCard(index, 'imageUrl', media.url)}
 							allowedTypes={['image']}
 							value={card.imageUrl}
 							render={({ open }) => (
-								<Button className="select-image-button" onClick={open}>
+								<Button isSecondary onClick={open}>
 									{card.imageUrl ? <img src={card.imageUrl} alt="" /> : 'Select Image'}
 								</Button>
 							)}
@@ -78,15 +47,12 @@ const Edit = ({ attributes, setAttributes }) => {
 							url={card.linkUrl}
 							onChange={(url) => updateCard(index, 'linkUrl', url)}
 						/>
-						<Button className="remove-card-button">Remove</Button>
+						<Button isDestructive onClick={() => removeCard(index)}>Remove</Button>
 					</div>
 				))}
 			</div>
 		</Fragment>
 	);
 };
-
-export default Edit;
-
 
 export default Edit;
