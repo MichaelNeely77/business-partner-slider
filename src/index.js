@@ -7,7 +7,6 @@ import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 import Save from './save';
 import './style.scss';
-import './editor.scss';
 
 registerBlockType('business-partner-slider/business-card-slider', {
 	title: 'Business Card Slider',
