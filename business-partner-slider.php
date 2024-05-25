@@ -7,32 +7,45 @@
  * Author URI: https://michaelneely.net
  */
 
-function bcs_enqueue_assets() {
-	wp_enqueue_script(
-			'bcs-block-editor-js',
-			plugins_url('build/index.js', __FILE__),
-			array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components')
+function bcs_register_block() {
+	$asset_file = include(plugin_dir_path(__FILE__) . 'build/index.asset.php');
+
+	wp_register_script(
+		'bcs-block-editor-js',
+		plugins_url('build/index.js', __FILE__),
+		$asset_file['dependencies'],
+		$asset_file['version']
 	);
 
-	wp_enqueue_style(
-			'bcs-block-editor-css',
-			plugins_url('build/editor.css', __FILE__)
+	wp_register_style(
+		'bcs-block-editor-css',
+		plugins_url('build/editor.css', __FILE__),
+		array(),
+		filemtime(plugin_dir_path(__FILE__) . 'build/editor.css')
 	);
+
+	wp_register_style(
+		'bcs-frontend-css',
+		plugins_url('build/style.css', __FILE__),
+		array(),
+		filemtime(plugin_dir_path(__FILE__) . 'build/style.css')
+	);
+
+	register_block_type('business-partners-slider/business-card-slider', array(
+		'editor_script' => 'bcs-block-editor-js',
+		'editor_style' => 'bcs-block-editor-css',
+		'style' => 'bcs-frontend-css',
+	));
 }
-add_action('enqueue_block_editor_assets', 'bcs_enqueue_assets');
+add_action('init', 'bcs_register_block');
 
 function bcs_enqueue_frontend_assets() {
-	wp_enqueue_style(
-			'bcs-frontend-style',
-			plugins_url('build/style.css', __FILE__)
-	);
-
 	wp_enqueue_script(
-			'bcs-frontend-script',
-			plugins_url('src/frontend.js', __FILE__),
-			array('jquery'),
-			null,
-			true
+		'bcs-frontend-script',
+		plugins_url('build/frontend.js', __FILE__),
+		array('jquery'),
+		filemtime(plugin_dir_path(__FILE__) . 'build/frontend.js'),
+		true
 	);
 }
 add_action('wp_enqueue_scripts', 'bcs_enqueue_frontend_assets');
