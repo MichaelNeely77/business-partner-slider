@@ -17,19 +17,25 @@ function bcs_register_block() {
 		$asset_file['version']
 	);
 
-	wp_register_style(
-		'bcs-block-editor-css',
-		plugins_url('build/editor.css', __FILE__),
-		array(),
-		filemtime(plugin_dir_path(__FILE__) . 'build/editor.css')
-	);
+	$editor_css = 'build/editor.css';
+	if (file_exists(plugin_dir_path(__FILE__) . $editor_css)) {
+		wp_register_style(
+			'bcs-block-editor-css',
+			plugins_url($editor_css, __FILE__),
+			array(),
+			filemtime(plugin_dir_path(__FILE__) . $editor_css)
+		);
+	}
 
-	wp_register_style(
-		'bcs-frontend-css',
-		plugins_url('build/style.css', __FILE__),
-		array(),
-		filemtime(plugin_dir_path(__FILE__) . 'build/style.css')
-	);
+	$frontend_css = 'build/style.css';
+	if (file_exists(plugin_dir_path(__FILE__) . $frontend_css)) {
+		wp_register_style(
+			'bcs-frontend-css',
+			plugins_url($frontend_css, __FILE__),
+			array(),
+			filemtime(plugin_dir_path(__FILE__) . $frontend_css)
+		);
+	}
 
 	register_block_type('business-partners-slider/business-card-slider', array(
 		'editor_script' => 'bcs-block-editor-js',
@@ -40,12 +46,15 @@ function bcs_register_block() {
 add_action('init', 'bcs_register_block');
 
 function bcs_enqueue_frontend_assets() {
-	wp_enqueue_script(
-		'bcs-frontend-script',
-		plugins_url('build/frontend.js', __FILE__),
-		array('jquery'),
-		filemtime(plugin_dir_path(__FILE__) . 'build/frontend.js'),
-		true
-	);
+	$frontend_js = 'build/frontend.js';
+	if (file_exists(plugin_dir_path(__FILE__) . $frontend_js)) {
+		wp_enqueue_script(
+			'bcs-frontend-script',
+			plugins_url($frontend_js, __FILE__),
+			array('jquery'),
+			filemtime(plugin_dir_path(__FILE__) . $frontend_js),
+			true
+		);
+	}
 }
 add_action('wp_enqueue_scripts', 'bcs_enqueue_frontend_assets');

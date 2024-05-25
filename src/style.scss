@@ -5,11 +5,27 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-business-partner-slider {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
-  border: 1px solid #000;
+.bcs-slider {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
 }
 
+.bcs-card {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+}
+
+.bcs-card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.bcs-card.active {
+  opacity: 1;
+}
 
