@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Business Card Slider
  * Description: A custom Gutenberg block to display a slider of business card-sized images with fade transitions.
- * Version: 1.0
+ * Version: 1.0.0
  * Author: Michael Neely
  * Author URI: https://michaelneely.net
  */

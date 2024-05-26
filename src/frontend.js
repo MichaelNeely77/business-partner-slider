@@ -14,3 +14,5 @@ jQuery(document).ready(function($) {
 		setInterval(showNextCard, 5000); // Change card every 5 seconds
 	}
 });
+
+

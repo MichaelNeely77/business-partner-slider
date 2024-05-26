@@ -1,1 +1,1 @@
-.wp-block-create-block-business-partner-slider{background-color:#21759b;border:1px solid #000;color:#fff;padding:2px}
+.bcs-slider{height:100px;overflow:hidden;position:relative;width:100%}.bcs-card{height:100px;opacity:0;position:absolute;transition:opacity 1s ease-in-out;width:200px}.bcs-card img{max-height:100%;max-width:100%}.bcs-card.active{opacity:1}

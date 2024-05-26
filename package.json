@@ -1,20 +1,25 @@
 {
-	"name": "business-partner-slider",
-	"version": "0.1.0",
-	"description": "Example block scaffolded with Create Block tool.",
-	"author": "The WordPress Contributors",
-	"license": "GPL-2.0-or-later",
-	"main": "build/index.js",
-	"scripts": {
-		"build": "wp-scripts build",
-		"format": "wp-scripts format",
-		"lint:css": "wp-scripts lint-style",
-		"lint:js": "wp-scripts lint-js",
-		"packages-update": "wp-scripts packages-update",
-		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start"
-	},
-	"devDependencies": {
-		"@wordpress/scripts": "^27.9.0"
-	}
+  "name": "business-partners-slider",
+  "version": "1.0.0",
+  "description": "A custom Gutenberg block to display a slider of business card-sized images with fade transitions.",
+  "main": "index.js",
+  "scripts": {
+	"build": "wp-scripts build",
+	"start": "wp-scripts start"
+  },
+  "author": "Your Name",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+	"@wordpress/scripts": "^23.0.0"
+  },
+  "dependencies": {
+	"@wordpress/block-editor": "^12.3.0",
+	"@wordpress/blocks": "^12.3.0",
+	"@wordpress/components": "^18.3.0",
+	"@wordpress/element": "^12.3.0",
+	"react": "^17.0.2",
+	"react-dom": "^17.0.2"
+  }
 }
+
+
